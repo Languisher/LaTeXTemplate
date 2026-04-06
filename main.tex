@@ -1,0 +1,53 @@
+\documentclass[cn,hazy,blue,14pt,screen,nofont]{elegantnote}
+
+\setCJKmainfont{Songti SC}[
+  BoldFont = Songti SC Bold,
+  ItalicFont = Songti SC,
+  BoldItalicFont = Songti SC Bold
+]
+\setCJKsansfont{PingFang SC}[BoldFont = PingFang SC Semibold]
+\setCJKmonofont{Songti SC}[BoldFont = Songti SC Bold]
+\setCJKfamilyfont{zhsong}{Songti SC}[BoldFont = Songti SC Bold]
+\setCJKfamilyfont{zhhei}{Heiti SC}[BoldFont = Heiti SC Medium]
+\setCJKfamilyfont{zhkai}[
+  Path=/System/Library/AssetsV2/com_apple_MobileAsset_Font8/88d6cc32a907955efa1d014207889413890573be.asset/AssetData/
+]{Kaiti.ttc}
+\setCJKfamilyfont{zhfs}{Songti SC}[BoldFont = Songti SC Bold]
+\newcommand*{\songti}{\CJKfamily{zhsong}}
+\newcommand*{\heiti}{\CJKfamily{zhhei}}
+\newcommand*{\kaishu}{\CJKfamily{zhkai}}
+\newcommand*{\fangsong}{\CJKfamily{zhfs}}
+
+\title{ElegantNote：一个优美的 \LaTeX\ 笔记模板}
+
+\author{\kaishu 林楠}
+\institute{\kaishu 上海交通大学}
+
+\version{1.0}
+\date{\zhdate{2026/4/6}}
+
+\usepackage{array}
+
+\begin{document}
+
+\maketitle
+
+\vspace{1cm}
+
+\centerline{
+  \includegraphics[width=0.3\textwidth]{sjtu-logo.png}
+}
+
+\newpage
+
+\pagestyle{empty}
+\pagenumbering{gobble}
+\tableofcontents
+\newpage
+
+\pagestyle{fancy-note}
+\pagenumbering{arabic}
+
+\input{contents/template}
+
+\end{document}

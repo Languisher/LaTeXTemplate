@@ -183,8 +183,8 @@
   \newtheorem*{note}{\normalfont\bfseries 注} %
   \newtheorem{case}{\normalfont\bfseries 案例} %
   \renewcommand*{\proofname}{\normalfont\bfseries\color{ecolor}证明} %
-  \renewcommand\contentsname{\color{ecolor}目录}
-  \renewcommand\refname{\color{ecolor}参考文献} %
+  \renewcommand\contentsname{目录}
+  \renewcommand\refname{参考文献} %
   \renewcommand\figurename{图} %
   \renewcommand\tablename{表}
   \newcommand\versiontext{版本：}%
@@ -303,6 +303,7 @@
 \setlength{\footnotesep}{12pt}
 
 \RequirePackage{titlesec}
+\RequirePackage{lastpage}
 \titleformat*{\section}{\normalfont\Large\bfseries\color{ecolor}}
 \titleformat*{\subsection}{\normalfont\large\bfseries\color{ecolor}}
 \titleformat*{\subsubsection}{\normalfont\normalsize\bfseries\color{ecolor}}
@@ -383,15 +384,29 @@
 \RequirePackage{fancyhdr}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
+\newcommand{\ELEGANT@header@title}{}
+\newcommand{\ELEGANT@headerstyle}{%
+  \footnotesize\color{gray}}
+\newcommand{\ELEGANT@headeroffset}{17pt}
+\newcommand{\ELEGANT@headerbox}[1]{%
+  \raisebox{-\ELEGANT@headeroffset}[0pt][0pt]{#1}}
+\renewcommand{\sectionmark}[1]{%
+  \markboth{\thesection\ #1}{\thesection\ #1}}
+\renewcommand{\subsectionmark}[1]{%
+  \markright{\thesubsection\ #1}}
 
 \fancypagestyle{fancy-note}{
   \fancyhf{} % clear header/footer settings
-  \fancyfoot[C]{\footnotesize\textcolor{gray}{\thepage}}
+  \fancyhead[L]{\ELEGANT@headerbox{\ELEGANT@headerstyle \ELEGANT@header@title}}
+  \fancyhead[R]{\ELEGANT@headerbox{\ELEGANT@headerstyle \rightmark}}
+  \fancyfoot[C]{\footnotesize\textcolor{gray}{\thepage{} / \pageref*{LastPage}}}
 }
 
 \fancypagestyle{plain}{%
   \fancyhf{}
-  \fancyfoot[R]{\footnotesize\textcolor{gray}{\thepage}}}
+  \fancyhead[L]{\ELEGANT@headerbox{\ELEGANT@headerstyle \ELEGANT@header@title}}
+  \fancyhead[R]{\ELEGANT@headerbox{\ELEGANT@headerstyle \rightmark}}
+  \fancyfoot[R]{\footnotesize\textcolor{gray}{\thepage{} / \pageref*{LastPage}}}}
 
 \pagestyle{fancy-note}
 
@@ -412,6 +427,8 @@
 
 \renewcommand\maketitle{\par
   \begingroup
+    \xdef\ELEGANT@header@title{\unexpanded\expandafter{\@title}}%
+    \markboth{}{}
     \renewcommand\thefootnote{\@fnsymbol\c@footnote}%
     \def\@makefnmark{\rlap{\@textsuperscript{\normalfont\@thefnmark}}}%
     \long\def\@makefntext##1{\parindent 1em\noindent
@@ -464,11 +481,11 @@
 
   \IfEmpty\version
   \else 
-    {\normalfont\citshape\versiontext\the\version \\}
+    {\normalfont\versiontext\the\version \\}
   \fi
 	\ifx\@date\empty
 	\else 
-    {\normalfont\citshape\updatetext\@date}%
+    {\normalfont\updatetext\@date}%
   \fi
   \end{center}%
   \par}
